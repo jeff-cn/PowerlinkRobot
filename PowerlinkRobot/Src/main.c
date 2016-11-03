@@ -33,10 +33,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-#include "lwip.h"
-
 /* USER CODE BEGIN Includes */
-
+#include "eplTask.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -122,7 +120,7 @@ int main(void)
   MX_TIM12_Init();
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
-  MX_WWDG_Init();
+  //MX_WWDG_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -142,7 +140,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 2048);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -214,7 +212,7 @@ void SystemClock_Config(void)
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
 /* ADC1 init function */
@@ -582,15 +580,29 @@ static void MX_GPIO_Init(void)
 
 }
 
-/* USER CODE BEGIN 4 */
+#include "EdrvF407.h"
+#include "Epl.h"
+#include "EplDllk.h"
+#include "EplEvent.h"
+#include "EplTarget.h"
 
+#include "lwip/init.h"
+#include "lwip/netif.h"
+#include "ethernetif.h"
+
+
+/* USER CODE BEGIN 4 */
+extern tEplKernel EdrvInit(tEdrvInitParam * pEdrvInitParam_p);
 /* USER CODE END 4 */
 
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
   /* init code for LWIP */
-  MX_LWIP_Init();
+  Epl_Init();
+	//MX_LWIP_Init();
+	
+	//EdrvInit(NULL);
 
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
