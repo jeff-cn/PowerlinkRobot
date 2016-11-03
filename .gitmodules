@@ -1,3 +1,6 @@
 [submodule "bldcSTM32"]
 	path = bldcSTM32
 	url = https://github.com/ghjackie/bldcSTM32.git
+[submodule "openPowerlinkLwip"]
+	path = openPowerlinkLwip
+	url = https://github.com/ghjackie/openPowerlinkLwip.git
