@@ -166,4 +166,18 @@ standard names. */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 /* USER CODE END Defines */ 
 
+#define TIMER1_TIMEOUT_INTERRUPT 			1
+#define TIMER2_TIMEOUT_INTERRUPT 			2
+
+#define EVENT_QUEUE_SIZE 							50
+#define COMMANDSTOPROCESS_QUEUE_SIZE 	3
+#define COMMANDSPROCESSED_QUEUE_SIZE 	3
+
+/* This struct is the primitive type for eventQueue elements
+ * interrupt_type may assume only 4 values (FRAME_RECEIVED_INTERRUPT,FRAME_TRANSMITTED_INTERRUPT,TIMER1_TIMEOUT_INTERRUPT,TIMER2_TIMEOUT_INTERRUPT)*/
+typedef struct Event
+{
+	int interrupt_type;
+} eventQueueElement;
+
 #endif /* FREERTOS_CONFIG_H */
